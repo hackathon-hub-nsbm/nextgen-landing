@@ -83,8 +83,9 @@ const Form = () => {
             } else {
                 setSubmitMessage({ type: 'error', message: 'Registration failed!' });
             }
-        } catch (error: any) {
-            setSubmitMessage({ type: 'error', message: error.message || 'An error occurred during registration.' });
+        } catch (error: unknown) {
+            const errorMessage = error instanceof Error ? error.message : 'An error occurred during registration.';
+            setSubmitMessage({ type: 'error', message: errorMessage || 'An error occurred during registration.' });
         } finally {
             setIsSubmitting(false);
         }
@@ -95,21 +96,24 @@ const Form = () => {
 
         if (field.type == "select") {
             return (
-                <div key={field.id}>
+                <div key={field.id} className="h-28">
                     <div>{field.label}</div>
                     <select {...register(field.field_name as keyof UserType)} className="p-2 border-1 border-white">
+                        <option>Select {field.field_name}</option>
                         {field.options?.map((option, index) => (
                             <option key={index}>{option}</option>
                         ))}
                     </select>
+                    <div className="text-red-600">{errors[field.field_name as keyof UserType]?.message}</div>
                 </div>
             )
         }
         else {
             return (
-                <div key={field.id}>
+                <div key={field.id} className="h-28">
                     <div>{field.label}</div>
                     <input {...register(field.field_name as keyof UserType)} type={field.type} className="p-2 border-1 border-white" />
+                    <div className="text-red-600">{errors[field.field_name as keyof UserType]?.message}</div>
                 </div>
             )
         }
@@ -127,7 +131,7 @@ const Form = () => {
                     disabled={isSubmitting}
                 >
                     {isSubmitting ? (
-                        <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                        "..."
                     ) : (
                         "Register"
                     )}
