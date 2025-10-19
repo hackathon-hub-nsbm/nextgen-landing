@@ -98,7 +98,7 @@ const Form = () => {
             return (
                 <div key={field.id} className="h-28">
                     <div>{field.label}</div>
-                    <select {...register(field.field_name as keyof UserType)} className="p-2 border-1 border-white">
+                    <select {...register(field.field_name as keyof UserType)} className="p-2 border-1 border-white w-full">
                         <option>Select {field.field_name}</option>
                         {field.options?.map((option, index) => (
                             <option key={index}>{option}</option>
@@ -112,7 +112,7 @@ const Form = () => {
             return (
                 <div key={field.id} className="h-28">
                     <div>{field.label}</div>
-                    <input {...register(field.field_name as keyof UserType)} type={field.type} className="p-2 border-1 border-white" />
+                    <input {...register(field.field_name as keyof UserType)} type={field.type} className="p-2 border-1 border-white w-full" />
                     <div className="text-red-600">{errors[field.field_name as keyof UserType]?.message}</div>
                 </div>
             )
