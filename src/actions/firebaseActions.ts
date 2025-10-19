@@ -25,6 +25,7 @@ export async function createUser(user: UserType): Promise<UserType> {
       gender: user.gender,
       batch: user.batch,
       degree: user.degree,
+      isMember: user.isMember,
       created_at: new Date(),
     });
 

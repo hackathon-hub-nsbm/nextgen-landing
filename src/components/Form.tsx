@@ -46,6 +46,13 @@ const fields = [
         "label": "Degree",
         "options": ["Artificial Intelligence", "Computer Science", "Data Science", "Computer Security", "Cyber Security", "Computer Networks", "Software Engineering", "Technology Management", "Management Information Systems"]
     },
+    {
+        "id": 7,
+        "field_name": "isMember",
+        "type": "radio",
+        "label": "Are you already a member?",
+        "options": ["Yes", "No"]
+    },
 ];
 
 const Form = () => {
@@ -58,7 +65,9 @@ const Form = () => {
         register,
         handleSubmit,
         formState: { errors },
+        reset,
     } = useForm<UserType>({
+        // @ts-expect-error - Zod resolver type compatibility issue with react-hook-form
         resolver: zodResolver(UserSchema),
         mode: "onChange",
         defaultValues: {
@@ -68,6 +77,7 @@ const Form = () => {
             gender: undefined,
             batch: undefined,
             degree: undefined,
+            isMember: undefined,
         }
     })
 
@@ -88,13 +98,35 @@ const Form = () => {
             setSubmitMessage({ type: 'error', message: errorMessage || 'An error occurred during registration.' });
         } finally {
             setIsSubmitting(false);
+            reset();
         }
     }
 
     const renderFormField = (field: typeof fields[number]) => {
+        if (field.type === "radio") {
+            return (
+                <div key={field.id} className="h-28">
+                    <div>{field.label}</div>
+                    <div className="flex gap-4">
+                        {field.options?.map((option, index) => (
+                            <label key={index} className="flex items-center gap-2">
+                                <input
+                                    type="radio"
+                                    value={option === "Yes" ? "true" : "false"}
+                                    {...register(field.field_name as keyof UserType, {
+                                        setValueAs: (value) => value === "true"
+                                    })}
+                                />
+                                {option}
+                            </label>
+                        ))}
+                    </div>
+                    <div className="text-red-600">{errors[field.field_name as keyof UserType]?.message}</div>
+                </div>
+            )
+        }
 
-
-        if (field.type == "select") {
+        if (field.type === "select") {
             return (
                 <div key={field.id} className="h-28">
                     <div>{field.label}</div>
@@ -121,6 +153,7 @@ const Form = () => {
 
     return (
         <section>
+            {/* @ts-expect-error - handleSubmit return type compatibility with form onSubmit handler */}
             <form onSubmit={handleSubmit(onSubmit)} ref={containerFormRef}>
                 {fields.map((field) => (
                     renderFormField(field)

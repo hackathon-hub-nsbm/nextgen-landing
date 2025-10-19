@@ -28,7 +28,7 @@ export const UserSchema = z.object({
     ],
     "Please select a valid degree"
   ),
-  isMember: z.boolean(),
+  isMember: z.stringbool("Please select your status"),
 });
 
 export type UserType = z.infer<typeof UserSchema>;
