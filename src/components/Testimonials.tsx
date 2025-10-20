@@ -17,7 +17,7 @@ const Testimonials = () => {
         { id: 3, name: "Sithija Kaveeshwara", text: "I'm currently a volunteer for the Hackathon Hub", top: "80%", left: "25%" },
         { id: 4, name: "Sanidula Liyanage", text: "I just love meeting like-minded people", top: "70%", left: "8%" },
         { id: 5, name: "Seniru Samaranayake", text: "Hackathon Hub helped me grow my creativity and leadership!", top: "25%", left: "8%" },
-        { id: 6, name: "Tharushi Subasinghe", text: "Joining Hackathon Hub was one of my best university decisions!", top: "60%", left: "45%" },
+        { id: 6, name: "Akash Desilva", text: "Joining Hackathon Hub was one of my best university decisions!", top: "60%", left: "45%" },
         { id: 7, name: "Yasiru Perera", text: "Every event feels like a new adventure — love this club!", top: "80%", left: "45%" },
         { id: 8, name: "Wasana Fernando", text: "Hackathon Hub made me confident in teamwork and innovation!", top: "15%", left: "38%" },
     ];
@@ -58,7 +58,7 @@ const Testimonials = () => {
                 <div
                     key={t.id}
                     ref={(el) => (cardsRef.current[index] = el)}
-                    className="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-lg px-4 py-3 w-64 text-center shadow-lg"
+                    className="bg-cyan-900/20 backdrop-blur-lg border border-cyan-400 text-cyan-200 rounded-lg px-4 py-3 w-64 text-center shadow-lg shadow-cyan-500/50"
                     style={{
                         top: window.innerWidth >= 768 ? t.top : undefined,
                         left: window.innerWidth >= 768 ? t.left : undefined,
@@ -66,8 +66,8 @@ const Testimonials = () => {
                         position: window.innerWidth >= 768 ? "absolute" : "relative",
                     }}
                 >
-                    <p className="font-semibold text-lg">{t.name}</p>
-                    <p className="text-sm text-white-300">{t.text}</p>
+                    <p className="font-semibold text-lg text-cyan-300">{t.name}</p>
+                    <p className="text-sm text-cyan-100">{t.text}</p>
                 </div>
             ))}
         </div>
