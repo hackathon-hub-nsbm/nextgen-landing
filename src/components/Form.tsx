@@ -105,7 +105,7 @@ const Form = () => {
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 ref={containerFormRef}
-                className="bg-gray-100 shadow-lg rounded-2xl p-8 w-full max-w-2xl border border-gray-300"
+                className="bg-gray-100 shadow-lg p-8 w-full max-w-2xl border border-gray-300"
             >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {fields.filter(f => f.type !== "radio").map(field => (
@@ -114,7 +114,7 @@ const Form = () => {
                             {field.type === "select" ? (
                                 <select
                                     {...register(field.field_name as keyof UserType)}
-                                    className="border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                                    className="border  p-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
                                 >
                                     <option value="">Select {field.label}</option>
                                     {field.options?.map((option, index) => (
@@ -125,7 +125,7 @@ const Form = () => {
                                 <input
                                     type={field.type}
                                     {...register(field.field_name as keyof UserType)}
-                                    className="border rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                                    className="border  p-2 focus:outline-none focus:ring-2 focus:ring-gray-400"
                                 />
                             )}
                             <p className="text-red-600 text-sm mt-1">{errors[field.field_name as keyof UserType]?.message}</p>
@@ -155,7 +155,7 @@ const Form = () => {
                     <button
                         type="submit"
                         disabled={isSubmitting}
-                        className="px-10 py-3 font-bold rounded-md transition-all duration-300 bg-gray-600 text-white hover:bg-gray-700 disabled:opacity-70"
+                        className="px-10 py-3 font-bold  transition-all duration-300 bg-gray-600 text-white hover:bg-gray-700 disabled:opacity-70"
                     >
                         {isSubmitting ? "..." : "Register"}
                     </button>
