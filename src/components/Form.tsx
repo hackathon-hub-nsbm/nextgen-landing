@@ -105,7 +105,8 @@ const Form = () => {
             <form
                 onSubmit={handleSubmit(onSubmit)}
                 ref={containerFormRef}
-                className="bg-gray-100 shadow-lg p-8 w-full max-w-2xl border border-gray-300 rounded-xl"
+                //className="bg-gray-100 shadow-lg p-8 w-full max-w-2xl border border-gray-300 rounded-xl"
+                className="bg-gradient-to-br from-indigo-500 via-purple-500 to-blue-500 shadow-2xl p-8 w-full max-w-xxl border border-indigo-200 rounded-xl text-white"
             >
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {fields.filter(f => f.type !== "radio").map(field => (
