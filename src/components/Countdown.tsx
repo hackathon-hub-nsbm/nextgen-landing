@@ -42,10 +42,10 @@ const Countdown = ({ date }: { date: string }) => {
   ];
 
   return (
-    <div className="flex justify-center gap-4 text-center mt-4">
+    <div className="flex justify-center gap-4 text-center mt-4 ">
       {timeArray.map((t, index) => (
         <div key={index} className="flex flex-col items-center">
-          <div className="bg-gray-800 text-white px-4 py-2  text-lg font-bold min-w-[50px]">
+          <div className="bg-gray-800 text-white px-4 py-2  text-lg font-bold min-w-[50px] rounded-lg">
             {String(t.value).padStart(2, "0")}
           </div>
           <span className="text-sm text-gray-400 mt-1">{t.label}</span>
