@@ -22,7 +22,7 @@ const Testimonials = () => {
         { id: 8, name: "Wasana Fernando", text: "Hackathon Hub made me confident in teamwork and innovation!", top: "15%", left: "38%" },
     ];
 
-    // GSAP animation only for large screens
+    
     useGSAP(() => {
         if (window.innerWidth >= 768) {
             gsap.set(cardsRef.current, { opacity: 0, scale: 0.9 });
@@ -60,7 +60,6 @@ const Testimonials = () => {
                     ref={(el) => (cardsRef.current[index] = el)}
                     className="bg-white/10 backdrop-blur-md border border-white/20 text-white rounded-lg px-4 py-3 w-64 text-center shadow-lg"
                     style={{
-                        // Only apply absolute positioning on large screens
                         top: window.innerWidth >= 768 ? t.top : undefined,
                         left: window.innerWidth >= 768 ? t.left : undefined,
                         transform: window.innerWidth >= 768 ? "translate(-50%, -50%)" : undefined,
