@@ -101,13 +101,13 @@ const Form = () => {
     }
 
     return (
-        <section className="flex justify-center items-center  text-white">
+        <div className="flex justify-center items-center  text-white">
             <form
+              // @ts-expect-error - Zod resolver type compatibility issue with react-hook-form
                 onSubmit={handleSubmit(onSubmit)}
                 ref={containerFormRef}
-                className="relative p-10 w-full max-w-2xl rounded-2xl shadow-[0_0_20px_rgba(128,0,255,0.4)] border border-purple-500 bg-opacity-20 backdrop-blur-md"
+                className="relative p-6 w-full max-w-2xl rounded-2xl shadow-[0_0_20px_rgba(128,0,255,0.4)] border border-purple-500 bg-opacity-20 backdrop-blur-md"
             >
-                {/* <h2 className="text-3xl font-bold text-center mb-6 neon-text">NextGen Hackers Registration</h2> */}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                     {fields.filter(f => f.type !== "radio").map(field => (
@@ -172,8 +172,7 @@ const Form = () => {
                     </div>
                 )}
             </form>
-         
-        </section>
+        </div>
     )
 }
 

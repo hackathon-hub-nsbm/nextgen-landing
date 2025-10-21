@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Rubik } from "next/font/google";
+import { ABeeZee } from "next/font/google";
 import "./globals.css";
 
 export const metadata: Metadata = {
-    title: "NextGen - Hackers Meetup",
-    description: "Hakcathon Hub - NSBM Green University",
+  title: "NextGen - Hackers Meetup",
+  description: "Hakcathon Hub - NSBM Green University",
 };
 
-const rubik = Rubik({
+const abeezee = ABeeZee({
   subsets: ["latin"],
+  weight: ["400"],
 });
 
 export default function RootLayout({
@@ -19,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${rubik.className} antialiased bg-black text-white select-none`}
+        className={`${abeezee.className} antialiased text-white select-none bg-[url('/assets/background.png')] bg-cover bg-center bg-no-repeat md:pr-8`}
       >
         {children}
       </body>

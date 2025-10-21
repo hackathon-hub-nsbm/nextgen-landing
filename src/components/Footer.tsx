@@ -5,15 +5,15 @@ import { FaFacebookSquare, FaLinkedin, FaGithub } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="w-full max-w-2xl mt-8 flex flex-col sm:flex-row justify-between rounded-lg items-center bg-black/30 p-5 text-sm gap-6">
+    <footer className="w-full max-w-2xl mt-4 flex flex-col sm:flex-row justify-between rounded-lg items-center bg-black/30 p-5 text-sm gap-6">
 
       {/* Logo */}
       <div className="flex items-center gap-3">
         <Image
           src="/assets/hackothon.jpg"
           alt="Hackathon Hub Logo"
-          width={80}
-          height={80}
+          width={120}
+          height={120}
           className="rounded-md"
         />
       </div>

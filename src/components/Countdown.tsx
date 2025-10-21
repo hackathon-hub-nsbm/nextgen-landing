@@ -40,7 +40,7 @@ const Countdown = ({ date }: { date: string }) => {
   ];
 
   return (
-    <div className="flex justify-center gap-3 mt-4 flex-wrap">
+    <div className="flex justify-center gap-3 flex-wrap">
       {timeArray.map((t, index) => (
         <div
           key={index}
