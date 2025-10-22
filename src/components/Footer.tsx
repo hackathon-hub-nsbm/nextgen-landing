@@ -24,6 +24,7 @@ const Footer = () => {
           <p className="font-semibold text-white">Contact Us</p>
           <p>Hackathon Hub NSBM</p>
           <p>L2-206, B2 Floor, FOC, NSBM</p>
+          <p>Email:hh@nsbm.lk</p>
         </div>
 
         {/* Social links */}
