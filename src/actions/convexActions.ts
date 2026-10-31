@@ -1,11 +1,10 @@
 "use server";
 
 import { ConvexHttpClient } from "convex/browser";
+import type { UserType } from "@/types/user";
 import { api } from "../../convex/_generated/api";
-import { UserType } from "@/types/user";
 
-const convexUrl =
-  process.env.NEXT_PUBLIC_CONVEX_URL || "https://placeholder.convex.cloud";
+const convexUrl = process.env.NEXT_PUBLIC_CONVEX_URL || "https://placeholder.convex.cloud";
 const convex = new ConvexHttpClient(convexUrl);
 
 export async function createUser(user: UserType) {

@@ -2,9 +2,7 @@ import * as z from "zod";
 
 export const UserSchema = z.object({
   name: z.string().regex(/^[a-zA-Z\s]{2,32}$/, "Please enter a valid name"),
-  email: z
-    .email("Please enter a valid email address")
-    .min(1, "Email is required"),
+  email: z.email("Please enter a valid email address").min(1, "Email is required"),
   phone_number: z
     .string()
     .regex(/^[+]?[\d\s\-()]+$/, "Please enter a valid phone number")
@@ -12,7 +10,7 @@ export const UserSchema = z.object({
   gender: z.enum(["Male", "Female"], "Please select a valid gender"),
   batch: z.enum(
     ["25.3", "25.2", "25.1", "24.3", "24.2", "24.1", "23.2", "23.1"],
-    "Please select a valid batch"
+    "Please select a valid batch",
   ),
   degree: z.enum(
     [
@@ -26,7 +24,7 @@ export const UserSchema = z.object({
       "Technology Management",
       "Management Information Systems",
     ],
-    "Please select a valid degree"
+    "Please select a valid degree",
   ),
   isMember: z.boolean("Please select your status"),
 });

@@ -42,3 +42,8 @@ pnpm-lock.yaml
 !.dev.vars.example
 
 !.env.example
+
+.agents/
+.claude/
+skills-lock.json
+

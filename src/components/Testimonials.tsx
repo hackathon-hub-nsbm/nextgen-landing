@@ -1,8 +1,8 @@
 "use client";
 
-import { useRef } from "react";
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { useRef } from "react";
 
 const Testimonials = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -64,9 +64,7 @@ const Testimonials = () => {
       { x: 24, y: 84 },
     ];
 
-    let predefinedPositions;
-    if (window.innerWidth < 768) predefinedPositions = mobilePositions;
-    else predefinedPositions = desktopPositions;
+    const predefinedPositions = window.innerWidth < 768 ? mobilePositions : desktopPositions;
 
     const positions: { x: number; y: number }[] = [];
     testimonials.forEach((_, index) => {

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const Countdown = ({ date }: { date: string }) => {
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
@@ -42,14 +42,14 @@ const Countdown = ({ date }: { date: string }) => {
     <div className="flex flex-col items-center space-y-4">
       <div className="animate-pulse">
         <p className="text-2xl font-mono tracking-widest text-white-300 drop-shadow-[0_0_6px_#00ffff] drop-shadow-[0_0_12px_#9333ea]">
-           04 NOV 2025
+          04 NOV 2025
         </p>
       </div>
 
       <div className="flex justify-center gap-3 flex-wrap">
-        {timeArray.map((t, index) => (
+        {timeArray.map((t) => (
           <div
-            key={index}
+            key={t.label}
             className="flex flex-col items-center bg-black/80 border-2 border-purple-700 
                      p-3 rounded-lg min-w-[60px] transform transition-transform duration-300 hover:scale-105
                      "
