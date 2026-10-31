@@ -27,5 +27,11 @@
   },
   "observability": {
     "enabled": true
-  }
+  },
+  "routes": [
+    {
+      "pattern": "nextgen.hackathonhub.site",
+      "custom_domain": true
+    }
+  ]
 }
