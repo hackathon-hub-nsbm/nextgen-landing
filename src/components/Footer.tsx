@@ -7,7 +7,6 @@ const Footer = () => {
   return (
     <footer className="w-full max-w-2xl mt-4 flex flex-col sm:flex-row justify-between rounded-lg items-center bg-black/30 p-5 text-sm gap-6">
 
-      {/* Logo */}
       <div className="flex items-center gap-3">
         <Image
           src="/assets/hackothon.jpg"
@@ -18,17 +17,14 @@ const Footer = () => {
         />
       </div>
 
-     
-        {/* Contact info */}
-        <div className="text-center lg:text-center">
-          <p className="font-semibold text-white">Contact Us</p>
-          <p>Hackathon Hub NSBM</p>
-          <p>L2-206, B2 Floor, FOC, NSBM</p>
-          <p>Email:hh@nsbm.lk</p>
-        </div>
+      <div className="text-center lg:text-center">
+        <p className="font-semibold text-white">Contact Us</p>
+        <p>Hackathon Hub NSBM</p>
+        <p>L2-206, B2 Floor, FOC, NSBM</p>
+        <p>Email:hh@nsbm.lk</p>
+      </div>
 
-        {/* Social links */}
-        <div className="flex flex-col gap-2 ">
+      <div className="flex flex-col gap-2 ">
           <Link
             href="https://www.instagram.com/hackathonhub.nsbm/"
             target="_blank"

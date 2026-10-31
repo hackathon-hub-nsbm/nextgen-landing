@@ -92,7 +92,6 @@ const Testimonials = () => {
 
     testimonials.forEach((_, index) => {
       tl.call(() => {
-        // when there are more than max visible cards this removes the last one
         if (visibleCards.length >= maxVisibleCards) {
           const oldestCard = visibleCards.shift();
           if (oldestCard !== undefined && cardsRef.current[oldestCard]) {
@@ -104,10 +103,8 @@ const Testimonials = () => {
           }
         }
 
-        // adds the current card to visible cards
         visibleCards.push(index);
 
-        // makes the current card visible
         if (cardsRef.current[index]) {
           gsap.to(cardsRef.current[index], {
             opacity: 1,

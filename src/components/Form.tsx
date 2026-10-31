@@ -4,7 +4,8 @@ import { useState, useRef } from "react"
 import { UserType, UserSchema } from "@/types/user";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { createUser } from "@/actions/firebaseActions";
+import { useMutation } from "convex/react";
+import { api } from "../../convex/_generated/api";
 
 const fields = [
     {
@@ -57,6 +58,7 @@ const fields = [
 
 const Form = () => {
     const containerFormRef = useRef<HTMLFormElement>(null);
+    const createUser = useMutation(api.users.createUser);
 
     const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
     const [submitMessage, setSubmitMessage] = useState<{
@@ -65,7 +67,6 @@ const Form = () => {
     }>({ type: null, message: '' });
 
     const { register, handleSubmit, formState: { errors }, reset } = useForm<UserType>({
-        // @ts-expect-error - Zod resolver type compatibility issue with react-hook-form
         resolver: zodResolver(UserSchema),
         mode: "onChange",
         defaultValues: {
@@ -85,7 +86,15 @@ const Form = () => {
 
         try {
             console.log(data);
-            const result = await createUser(data);
+            const result = await createUser({
+                name: data.name,
+                email: data.email,
+                phone_number: data.phone_number,
+                gender: data.gender,
+                batch: data.batch,
+                degree: data.degree,
+                isMember: data.isMember,
+            });
             if (result) {
                 setSubmitMessage({ type: 'success', message: 'Registration successful!' });
             } else {
@@ -103,7 +112,6 @@ const Form = () => {
     return (
         <div className="flex justify-center items-center  text-white">
             <form
-              // @ts-expect-error - Zod resolver type compatibility issue with react-hook-form
                 onSubmit={handleSubmit(onSubmit)}
                 ref={containerFormRef}
                 className="relative p-6 w-full max-w-2xl rounded-2xl shadow-[0_0_20px_rgba(128,0,255,0.4)] border border-purple-500 bg-opacity-20 backdrop-blur-md"
