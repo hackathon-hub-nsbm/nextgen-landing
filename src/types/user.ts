@@ -9,7 +9,7 @@ export const UserSchema = z.object({
     .min(10, "Phone number must be at least 10 digits"),
   gender: z.enum(["Male", "Female"], "Please select a valid gender"),
   batch: z.enum(
-    ["25.3", "25.2", "25.1", "24.3", "24.2", "24.1", "23.2", "23.1"],
+    ["26.2", "26.1", "25.4", "25.3", "25.2", "25.1", "24.3", "24.2", "24.1", "23.2", "23.1"],
     "Please select a valid batch",
   ),
   degree: z.enum(

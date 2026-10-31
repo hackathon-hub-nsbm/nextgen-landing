@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation } from "convex/react";
 import { useRef, useState } from "react";
-import { type SubmitHandler, useForm } from "react-hook-form";
+import { Controller, type SubmitHandler, useForm } from "react-hook-form";
 import { UserSchema, type UserType } from "@/types/user";
 import { api } from "../../convex/_generated/api";
 
@@ -38,7 +38,19 @@ const fields = [
     field_name: "batch",
     type: "select",
     label: "Batch",
-    options: ["25.3", "25.2", "25.1", "24.3", "24.2", "24.1", "23.2", "23.1"],
+    options: [
+      "26.2",
+      "26.1",
+      "25.4",
+      "25.3",
+      "25.2",
+      "25.1",
+      "24.3",
+      "24.2",
+      "24.1",
+      "23.2",
+      "23.1",
+    ],
   },
   {
     id: 6,
@@ -78,6 +90,7 @@ const Form = () => {
 
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors },
     reset,
@@ -174,21 +187,33 @@ const Form = () => {
 
         <div className="mt-8 text-center">
           <p className="block mb-3 font-semibold text-cyan-300">Are you already a member?</p>
-          <div className="flex justify-center gap-8">
-            {fields
-              .find((f) => f.field_name === "isMember")
-              ?.options?.map((option) => (
-                <label key={option} className="flex items-center gap-2 cursor-pointer">
-                  <input
-                    type="radio"
-                    value={option === "Yes" ? "true" : "false"}
-                    {...register("isMember", { setValueAs: (v) => v === "true" })}
-                    className="accent-purple-500"
-                  />
-                  <span className="hover:text-cyan-400">{option}</span>
-                </label>
-              ))}
-          </div>
+          <Controller
+            name="isMember"
+            control={control}
+            render={({ field }) => (
+              <div className="flex justify-center gap-8">
+                {fields
+                  .find((f) => f.field_name === "isMember")
+                  ?.options?.map((option) => {
+                    const isYes = option === "Yes";
+                    return (
+                      <label key={option} className="flex items-center gap-2 cursor-pointer">
+                        <input
+                          type="radio"
+                          name={field.name}
+                          checked={field.value === isYes}
+                          onChange={() => field.onChange(isYes)}
+                          onBlur={field.onBlur}
+                          ref={field.ref}
+                          className="accent-purple-500"
+                        />
+                        <span className="hover:text-cyan-400">{option}</span>
+                      </label>
+                    );
+                  })}
+              </div>
+            )}
+          />
           <p className="text-red-400 text-sm mt-1">{errors.isMember?.message}</p>
         </div>
 
