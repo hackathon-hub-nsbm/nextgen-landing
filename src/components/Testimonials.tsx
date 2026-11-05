@@ -4,120 +4,143 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { useRef } from "react";
 
+const testimonials = [
+  {
+    id: 1,
+    name: "Sanidula Liyanage",
+    text: "I just love meeting like-minded people",
+  },
+  {
+    id: 2,
+    name: "Ometh Abeyrathne",
+    text: "Hackathon Hub made me fall in love with hackathons",
+  },
+  {
+    id: 3,
+    name: "Sithija Upawansa",
+    text: "I'm currently a volunteer for the Hackathon Hub",
+  },
+  {
+    id: 4,
+    name: "Seniru Samaranayake",
+    text: "Hackathon Hub helped me grow my creativity and leadership!",
+  },
+  {
+    id: 5,
+    name: "Amindya De Silva",
+    text: "Joining Hackathon Hub was one of my best university decisions!",
+  },
+  {
+    id: 6,
+    name: "Tharushi Subasinghe",
+    text: "Hackathon Hub is the best club ever!",
+  },
+  {
+    id: 7,
+    name: "Yasiru Dharmathilaka",
+    text: "Every event feels like a new adventure — love this club!",
+  },
+  {
+    id: 8,
+    name: "Wasana Fernando",
+    text: "Hackathon Hub made me confident in teamwork and innovation!",
+  },
+];
+
 const Testimonials = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  const testimonials = [
-    {
-      id: 1,
-      name: "Sanidula Liyanage",
-      text: "I just love meeting like-minded people",
-    },
-    {
-      id: 2,
-      name: "Ometh Abeyrathne",
-      text: "Hackathon Hub made me fall in love with hackathons",
-    },
-    {
-      id: 3,
-      name: "Sithija Upawansa",
-      text: "I'm currently a volunteer for the Hackathon Hub",
-    },
-    {
-      id: 4,
-      name: "Seniru Samaranayake",
-      text: "Hackathon Hub helped me grow my creativity and leadership!",
-    },
-    {
-      id: 5,
-      name: "Amindya De Silva",
-      text: "Joining Hackathon Hub was one of my best university decisions!",
-    },
-    {
-      id: 6,
-      name: "Tharushi Subasinghe",
-      text: "Hackathon Hub is the best club ever!",
-    },
-    {
-      id: 7,
-      name: "Yasiru Dharmathilaka",
-      text: "Every event feels like a new adventure — love this club!",
-    },
-    {
-      id: 8,
-      name: "Wasana Fernando",
-      text: "Hackathon Hub made me confident in teamwork and innovation!",
-    },
-  ];
+  useGSAP(
+    () => {
+      const isMobile = window.innerWidth < 768;
 
-  useGSAP(() => {
-    const desktopPositions: { x: number; y: number }[] = [
-      { x: 10, y: 10 },
-      { x: 54, y: 80 },
-      { x: 60, y: 14 },
-      { x: 10, y: 74 },
-    ];
+      const desktopPositions: { x: number; y: number }[] = [
+        { x: 3, y: 2 },
+        { x: 52, y: 86 },
+        { x: 54, y: 3 },
+        { x: 4, y: 85 },
+      ];
 
-    const mobilePositions: { x: number; y: number }[] = [
-      { x: 6, y: 4 },
-      { x: 24, y: 84 },
-    ];
+      const mobilePositions: { x: number; y: number }[] = [
+        { x: 50, y: 12 },
+        { x: 50, y: 12 },
+      ];
 
-    const predefinedPositions = window.innerWidth < 768 ? mobilePositions : desktopPositions;
+      const predefinedPositions = isMobile ? mobilePositions : desktopPositions;
 
-    const positions: { x: number; y: number }[] = [];
-    testimonials.forEach((_, index) => {
-      const positionIndex = index % predefinedPositions.length;
-      positions.push(predefinedPositions[positionIndex]);
-    });
+      const positions: { x: number; y: number }[] = testimonials.map((_, index) => {
+        const positionIndex = index % predefinedPositions.length;
+        return predefinedPositions[positionIndex];
+      });
 
-    gsap.set(cardsRef.current, { opacity: 0 });
+      gsap.set(cardsRef.current, {
+        opacity: 0,
+        scale: 0.92,
+        y: 8,
+        xPercent: isMobile ? -50 : 0,
+      });
 
-    cardsRef.current.forEach((card, index) => {
-      if (card) {
-        gsap.set(card, {
-          left: `${positions[index].x}%`,
-          top: `${positions[index].y}%`,
-        });
-      }
-    });
-
-    const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.5 });
-
-    const visibleCards: number[] = [];
-    const maxVisibleCards = window.innerWidth < 768 ? 2 : 3;
-
-    testimonials.forEach((_, index) => {
-      tl.call(() => {
-        if (visibleCards.length >= maxVisibleCards) {
-          const oldestCard = visibleCards.shift();
-          if (oldestCard !== undefined && cardsRef.current[oldestCard]) {
-            gsap.to(cardsRef.current[oldestCard], {
-              opacity: 0,
-              scale: 0.8,
-              duration: 0.6,
-            });
-          }
-        }
-
-        visibleCards.push(index);
-
-        if (cardsRef.current[index]) {
-          gsap.to(cardsRef.current[index], {
-            opacity: 1,
-            scale: 1,
-            duration: 0.8,
+      cardsRef.current.forEach((card, index) => {
+        if (card) {
+          gsap.set(card, {
+            left: `${positions[index].x}%`,
+            top: `${positions[index].y}%`,
           });
         }
-      }).to({}, { duration: 4 });
-    });
-  }, []);
+      });
+
+      const tl = gsap.timeline({ repeat: -1, repeatDelay: 0.3 });
+
+      const visibleCards: number[] = [0];
+      const maxVisibleCards = isMobile ? 1 : 2;
+
+      if (cardsRef.current[0]) {
+        gsap.set(cardsRef.current[0], { opacity: 1, scale: 1, y: 0 });
+      }
+
+      const cycleOrder = [...testimonials.keys()].slice(1).concat(0);
+
+      cycleOrder.forEach((index) => {
+        tl.to({}, { duration: 3.5 }).call(() => {
+          if (visibleCards.length >= maxVisibleCards) {
+            const oldestCard = visibleCards.shift();
+            if (oldestCard !== undefined && cardsRef.current[oldestCard]) {
+              gsap.to(cardsRef.current[oldestCard], {
+                opacity: 0,
+                scale: 0.9,
+                y: -6,
+                duration: 0.5,
+                ease: "power2.inOut",
+              });
+            }
+          }
+
+          visibleCards.push(index);
+
+          if (cardsRef.current[index]) {
+            gsap.fromTo(
+              cardsRef.current[index],
+              { opacity: 0, scale: 0.92, y: 8 },
+              {
+                opacity: 1,
+                scale: 1,
+                y: 0,
+                duration: 0.55,
+                ease: "back.out(1.4)",
+              },
+            );
+          }
+        });
+      });
+    },
+    { scope: containerRef },
+  );
 
   return (
     <div
       ref={containerRef}
-      className="w-full h-full flex flex-wrap justify-center items-center gap-4 md:absolute md:top-0 md:left-0 md:items-center md:justify-center pointer-events-none"
+      className="relative w-full h-28 md:h-full md:absolute md:inset-0 pointer-events-none z-20 overflow-hidden"
     >
       {testimonials.map((t, index) => (
         <div
@@ -125,10 +148,12 @@ const Testimonials = () => {
           ref={(el) => {
             cardsRef.current[index] = el;
           }}
-          className="absolute bg-cyan-900/20 backdrop-blur-lg border border-cyan-400 text-cyan-200 rounded-lg px-4 py-3 w-64 text-center shadow-lg shadow-cyan-500/50"
+          className="absolute bg-[#071c29]/85 backdrop-blur-xl border border-cyan-400/75 text-cyan-100 rounded-xl px-4 py-2.5 w-60 sm:w-64 text-left shadow-[0_8px_28px_rgba(6,182,212,0.38),inset_0_1px_0_0_rgba(255,255,255,0.2)]"
         >
-          <p className="font-semibold text-base md:text-lg text-cyan-300">{t.name}</p>
-          <p className="text-xs md:text-sm text-cyan-100">{t.text}</p>
+          <p className="font-semibold text-xs sm:text-sm text-cyan-300 tracking-wide truncate mb-1">
+            {t.name}
+          </p>
+          <p className="text-xs text-cyan-50/90 leading-snug text-pretty">&ldquo;{t.text}&rdquo;</p>
         </div>
       ))}
     </div>

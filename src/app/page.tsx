@@ -8,22 +8,17 @@ import Testimonials from "@/components/Testimonials";
 
 export default function Home() {
   return (
-    <div className="flex flex-col md:flex-row items-center justify-center min-h-screen">
-      <div className="md:w-1/2 h-160 md:h-screen flex flex-col items-center justify-center relative space-y-8">
-        <div className="block md:hidden">
-          <br />
-          <br />
-          <br />
-        </div>
+    <main className="w-full max-w-[1440px] mx-auto min-h-dvh px-4 sm:px-6 lg:px-10 py-8 md:py-6 flex flex-col md:flex-row items-center justify-center gap-8 lg:gap-10">
+      <section className="w-full md:w-1/2 md:min-h-[calc(100dvh-3rem)] flex flex-col items-center justify-center relative py-6 md:py-20 space-y-5">
         <EventHeader description="An annual event organized by Hackathon Hub to welcome new members and showcase exciting projects" />
-        <Countdown date="2025-11-04T09:30:00Z" />
+        <Countdown />
         <Testimonials />
-      </div>
+      </section>
 
-      <div className="flex flex-col items-center justify-center md:w-1/2 h-full">
+      <section className="w-full md:w-1/2 flex flex-col items-center justify-center">
         <Form />
         <Footer />
-      </div>
-    </div>
+      </section>
+    </main>
   );
 }

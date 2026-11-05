@@ -1,1 +1,14 @@
 @import "tailwindcss";
+
+html {
+  color-scheme: dark;
+}
+
+.font-mono {
+  font-family: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+}
+
+::selection {
+  background-color: rgba(168, 85, 247, 0.35);
+  color: #ecfeff;
+}

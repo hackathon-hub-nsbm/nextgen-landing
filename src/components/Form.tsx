@@ -13,18 +13,21 @@ const fields = [
     field_name: "name",
     type: "text",
     label: "Name",
+    placeholder: "Enter your full name",
   },
   {
     id: 2,
     field_name: "email",
     type: "email",
     label: "Email Address",
+    placeholder: "you@example.com",
   },
   {
     id: 3,
     field_name: "phone_number",
     type: "tel",
     label: "Phone Number",
+    placeholder: "07X XXX XXXX",
   },
   {
     id: 4,
@@ -113,7 +116,6 @@ const Form = () => {
     setSubmitMessage({ type: null, message: "" });
 
     try {
-      console.log(data);
       const result = await createUser({
         name: data.name,
         email: data.email,
@@ -124,9 +126,16 @@ const Form = () => {
         isMember: data.isMember,
       });
       if (result) {
-        setSubmitMessage({ type: "success", message: "Registration successful!" });
+        setSubmitMessage({
+          type: "success",
+          message: "Registration confirmed. See you at NextGen.",
+        });
+        reset();
       } else {
-        setSubmitMessage({ type: "error", message: "Registration failed!" });
+        setSubmitMessage({
+          type: "error",
+          message: "Registration could not be completed. Please try again.",
+        });
       }
     } catch (error: unknown) {
       const errorMessage =
@@ -137,100 +146,177 @@ const Form = () => {
       });
     } finally {
       setIsSubmitting(false);
-      reset();
     }
   };
 
   return (
-    <div className="flex justify-center items-center  text-white">
+    <div className="flex justify-center items-center w-full text-white">
       <form
         onSubmit={handleSubmit(onSubmit)}
         ref={containerFormRef}
-        className="relative p-6 w-full max-w-2xl rounded-2xl shadow-[0_0_20px_rgba(128,0,255,0.4)] border border-purple-500 bg-opacity-20 backdrop-blur-md"
+        noValidate
+        className="relative p-6 sm:p-7 w-full max-w-2xl rounded-2xl bg-[#0a0e1a]/75 backdrop-blur-xl border border-purple-500/45 shadow-[0_16px_48px_rgba(126,34,206,0.28),inset_0_1px_0_0_rgba(255,255,255,0.14)]"
       >
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-3">
           {fields
             .filter((f) => f.type !== "radio")
-            .map((field) => (
-              <div key={field.id} className="flex flex-col">
-                <label
-                  htmlFor={field.field_name}
-                  className="mb-2 font-semibold tracking-wide text-cyan-300"
-                >
-                  {field.label}
-                </label>
-                {field.type === "select" ? (
-                  <select
-                    id={field.field_name}
-                    {...register(field.field_name as keyof UserType)}
-                    className="bg-black/30 border border-purple-500 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
+            .map((field) => {
+              const fieldKey = field.field_name as keyof UserType;
+              const errorMsg = errors[fieldKey]?.message;
+              return (
+                <div key={field.id} className="flex flex-col">
+                  <label
+                    htmlFor={field.field_name}
+                    className="mb-1.5 text-sm font-semibold tracking-wide text-cyan-300"
                   >
-                    <option value="">Select {field.label}</option>
-                    {field.options?.map((option) => (
-                      <option key={option}>{option}</option>
-                    ))}
-                  </select>
-                ) : (
-                  <input
-                    id={field.field_name}
-                    type={field.type}
-                    {...register(field.field_name as keyof UserType)}
-                    className="bg-black/30 border border-purple-500 text-white p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-cyan-400"
-                  />
-                )}
-                <p className="text-red-400 text-sm mt-1">
-                  {errors[field.field_name as keyof UserType]?.message}
-                </p>
-              </div>
-            ))}
+                    {field.label}
+                  </label>
+                  {field.type === "select" ? (
+                    <div className="relative">
+                      <select
+                        id={field.field_name}
+                        {...register(fieldKey)}
+                        className={`w-full h-11 appearance-none bg-[#060913]/75 border text-white text-sm px-3.5 pr-9 rounded-lg transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-400/70 focus:border-cyan-400 cursor-pointer ${
+                          errorMsg
+                            ? "border-red-400/75"
+                            : "border-purple-500/50 hover:border-purple-400/80"
+                        }`}
+                      >
+                        <option value="" className="bg-[#0d1220] text-slate-400">
+                          Select {field.label}
+                        </option>
+                        {field.options?.map((option) => (
+                          <option key={option} value={option} className="bg-[#0d1220] text-white">
+                            {option}
+                          </option>
+                        ))}
+                      </select>
+                      <svg
+                        aria-hidden="true"
+                        className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-purple-300"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        strokeWidth={2}
+                      >
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  ) : (
+                    <input
+                      id={field.field_name}
+                      type={field.type}
+                      placeholder={field.placeholder}
+                      {...register(fieldKey)}
+                      className={`w-full h-11 bg-[#060913]/75 border text-white text-sm px-3.5 rounded-lg placeholder:text-slate-500 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-cyan-400/70 focus:border-cyan-400 ${
+                        errorMsg
+                          ? "border-red-400/75"
+                          : "border-purple-500/50 hover:border-purple-400/80"
+                      }`}
+                    />
+                  )}
+                  <p className="text-red-400 text-xs mt-1 min-h-[1rem] leading-tight">
+                    {errorMsg ?? ""}
+                  </p>
+                </div>
+              );
+            })}
         </div>
 
-        <div className="mt-8 text-center">
-          <p className="block mb-3 font-semibold text-cyan-300">Are you already a member?</p>
+        <div className="mt-3 text-center">
+          <p className="block mb-2.5 text-sm font-semibold tracking-wide text-cyan-300">
+            Are you already a member?
+          </p>
           <Controller
             name="isMember"
             control={control}
             render={({ field }) => (
-              <div className="flex justify-center gap-8">
+              <div className="flex justify-center gap-4">
                 {fields
                   .find((f) => f.field_name === "isMember")
                   ?.options?.map((option) => {
                     const isYes = option === "Yes";
+                    const isChecked = field.value === isYes;
                     return (
-                      <label key={option} className="flex items-center gap-2 cursor-pointer">
+                      <label
+                        key={option}
+                        className={`flex items-center justify-center gap-2.5 px-6 py-2 rounded-lg border text-sm font-medium cursor-pointer transition-all duration-200 select-none ${
+                          isChecked
+                            ? "bg-purple-600/30 border-cyan-400 text-white shadow-[0_0_14px_rgba(34,211,238,0.28)]"
+                            : "bg-[#060913]/60 border-purple-500/40 text-slate-300 hover:border-purple-400/80 hover:text-cyan-300"
+                        }`}
+                      >
                         <input
                           type="radio"
                           name={field.name}
-                          checked={field.value === isYes}
+                          checked={isChecked}
                           onChange={() => field.onChange(isYes)}
                           onBlur={field.onBlur}
                           ref={field.ref}
-                          className="accent-purple-500"
+                          className="sr-only"
                         />
-                        <span className="hover:text-cyan-400">{option}</span>
+                        <span
+                          className={`w-3.5 h-3.5 rounded-full border flex items-center justify-center transition-colors ${
+                            isChecked ? "border-cyan-400" : "border-purple-400/70"
+                          }`}
+                        >
+                          {isChecked && (
+                            <span className="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_6px_#22d3ee]" />
+                          )}
+                        </span>
+                        <span>{option}</span>
                       </label>
                     );
                   })}
               </div>
             )}
           />
-          <p className="text-red-400 text-sm mt-1">{errors.isMember?.message}</p>
+          <p className="text-red-400 text-xs mt-1 min-h-[1rem]">{errors.isMember?.message ?? ""}</p>
         </div>
 
-        <div className="flex justify-center mt-8">
+        <div className="flex justify-center mt-4">
           <button
             type="submit"
             disabled={isSubmitting}
-            className="relative px-10 py-3 font-bold rounded-md text-white bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-cyan-600 hover:to-purple-600 transition-all duration-300 shadow-[0_0_10px_rgba(0,255,255,0.5)] disabled:opacity-70"
+            className="relative inline-flex items-center justify-center gap-2 px-12 py-3 font-semibold tracking-wide rounded-lg text-white bg-gradient-to-r from-purple-600 to-cyan-600 hover:from-cyan-500 hover:to-purple-600 active:scale-[0.98] transition-all duration-200 shadow-[0_0_20px_rgba(6,182,212,0.4)] hover:shadow-[0_0_26px_rgba(34,211,238,0.65)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-300 disabled:opacity-65 disabled:pointer-events-none cursor-pointer"
           >
-            {isSubmitting ? "..." : "Register"}
+            {isSubmitting ? (
+              <>
+                <svg
+                  aria-hidden="true"
+                  className="w-4 h-4 animate-spin text-white"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  />
+                  <path
+                    className="opacity-90"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"
+                  />
+                </svg>
+                <span>Registering...</span>
+              </>
+            ) : (
+              "Register"
+            )}
           </button>
         </div>
 
         {submitMessage.type && (
           <div
-            className={`mt-4 text-center p-3 rounded-md ${
-              submitMessage.type === "success" ? "bg-green-600/40" : "bg-red-600/40"
+            role="status"
+            className={`mt-4 text-center px-4 py-2.5 rounded-lg text-sm font-medium border backdrop-blur-md transition-all ${
+              submitMessage.type === "success"
+                ? "bg-emerald-950/60 border-emerald-400/50 text-emerald-200"
+                : "bg-red-950/60 border-red-400/50 text-red-200"
             }`}
           >
             {submitMessage.message}
